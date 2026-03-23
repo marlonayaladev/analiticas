@@ -20,14 +20,23 @@ export default function App() {
   const [expandedProvRow, setExpandedProvRow] = useState(null); 
   const [expandedCountry, setExpandedCountry] = useState(null);
 
- useEffect(() => {
-    // Aquí estaba el error. Debe coincidir exactamente con la ruta de Python.
-    fetch('https://sap-dashboard-backend-g4fk.onrender.com')
-      .then(res => res.json())
-      .then(setData)
-      .catch(err => console.error("Error de conexión:", err));
+useEffect(() => {
+    // 1. Usamos la ruta completa /api/dashboard
+    fetch('https://sap-dashboard-backend-g4fk.onrender.com/api/dashboard')
+      .then(res => {
+        if (!res.ok) throw new Error(`El servidor respondió con error ${res.status}`);
+        return res.json();
+      })
+      .then(data => {
+        if (data.error) throw new Error(data.error);
+        setData(data);
+      })
+      .catch(err => {
+        console.error("Error de conexión:", err);
+        // 2. Le avisamos al usuario que puede ser el "despertar" de Render
+        setErrorServidor(`No se pudo conectar. Si estás usando Render gratis, puede tardar 50 segundos en despertar. Actualiza la página. Detalle: ${err.message}`);
+      });
   }, []);
-
   if (errorServidor) return (
     <div className="h-screen flex items-center justify-center bg-[#0f172a] p-8">
       <div className="bg-[#1e293b] p-6 rounded-xl border border-red-500/30 text-red-400 font-bold text-center">
