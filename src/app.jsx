@@ -21,7 +21,7 @@ export default function App() {
   const [expandedCountry, setExpandedCountry] = useState(null);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/dashboard')
+    fetch('https://sap-dashboard-backend.onrender.com/api/dashboard')
       .then(res => {
         if (!res.ok) throw new Error("Error HTTP " + res.status);
         return res.json();
