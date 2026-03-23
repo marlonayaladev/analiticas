@@ -22,7 +22,7 @@ export default function App() {
 
  useEffect(() => {
     // Aquí estaba el error. Debe coincidir exactamente con la ruta de Python.
-    fetch('http://127.0.0.1:8000/api/dashboard')
+    fetch('https://sap-dashboard-backend-g4fk.onrender.com')
       .then(res => res.json())
       .then(setData)
       .catch(err => console.error("Error de conexión:", err));
