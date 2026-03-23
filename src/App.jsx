@@ -20,17 +20,12 @@ export default function App() {
   const [expandedProvRow, setExpandedProvRow] = useState(null); 
   const [expandedCountry, setExpandedCountry] = useState(null);
 
-  useEffect(() => {
-    fetch('https://sap-dashboard-backend.onrender.com/api/dashboard')
-      .then(res => {
-        if (!res.ok) throw new Error("Error HTTP " + res.status);
-        return res.json();
-      })
-      .then(json => {
-        if (json.error) setErrorServidor(json.error);
-        else setData(json);
-      })
-      .catch(err => setErrorServidor("No se pudo conectar al Backend."));
+ useEffect(() => {
+    // Aquí estaba el error. Debe coincidir exactamente con la ruta de Python.
+    fetch('http://127.0.0.1:8000/api/dashboard-pro') 
+      .then(res => res.json())
+      .then(setData)
+      .catch(err => console.error("Error de conexión:", err));
   }, []);
 
   if (errorServidor) return (
