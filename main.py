@@ -65,8 +65,10 @@ def get_dashboard_data():
         grupos['group'] = grupos['group'].astype(str)
 
         # 6. Distribución Interactiva de Países
-        country_map = {"CL": "Chile", "PE": "Perú", "CO": "Colombia", "CL01": "Chile", "PE01": "Perú", "CO01": "Colombia"}
-        df_oc49['Pais'] = df_oc49['País'].map(country_map).fillna(df_oc49['País'])
+        # 6. Distribución Interactiva de Países (CÓDIGO CORREGIDO)
+        # Usamos 'Organización compras' que tiene los valores CL01, PE01, etc.
+        country_map = {"CL01": "Chile", "PE01": "Perú", "CO01": "Colombia"}
+        df_oc49['Pais'] = df_oc49['Organización compras'].map(country_map).fillna(df_oc49['Organización compras'])
         
         paises_list = []
         for pais in df_oc49['Pais'].dropna().unique():
